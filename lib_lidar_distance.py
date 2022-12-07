@@ -7,7 +7,7 @@ import json
 # SCA = GPIO3
 
 global lib
-global lib_mqtt_client
+
 
 
 class Lidar_Lite():
@@ -42,41 +42,32 @@ class Lidar_Lite():
     return dist
 
 
-def msw_mqtt_connect(broker_ip, port):
-    lib_mqtt_client = mqtt.Client()
-    lib_mqtt_client.on_connect = on_connect
-    lib_mqtt_client.on_disconnect = on_disconnect
-    lib_mqtt_client.on_subscribe = on_subscribe
-    lib_mqtt_client.on_message = on_message
-    lib_mqtt_client.connect(broker_ip, port)
-    lib_muv_topic = '/MUV/control/'+ lib['name'] + '/MICRO'
-    lib_mqtt_client.subscribe(lib_muv_topic, 0)
-    print(lib_muv_topic)
-    lib_mqtt_client.loop_start()
-   # lib_mqtt_client.loop_forever()
-    return lib_mqtt_client
-
-
 def on_connect(client, userdata, flags, rc):
-    print('[msg_mqtt_connect] connect to ', broker_ip)
+    if rc == 0:
+        print('[msw_mqtt_connect] connect to ', broker_ip)
+    else:
+        print("Bad connection Returned code=", rc)
 
 
 def on_disconnect(client, userdata, flags, rc=0):
     print(str(rc))
 
 
-def on_subscribe(client, userdata, mid, granted_qos):
-    print("subscribed: " + str(mid) + " " + str(granted_qos))
-
-
 def on_message(client, userdata, msg):
-    payload = msg.payload.decode('utf-8')
-    on_receive_from_msw(msg.topic, str(payload))
+    print(str(msg.payload.decode("utf-8")))
 
 
-def request_to_mission(cinObj):
-    con = cinObj['con']
+def msw_mqtt_connect(broker_ip, port):
+    global lib_mqtt_client
 
+    lib_mqtt_client = mqtt.Client()
+    lib_mqtt_client.on_connect = on_connect
+    lib_mqtt_client.on_disconnect = on_disconnect
+    lib_mqtt_client.on_message = on_message
+    lib_mqtt_client.connect(broker_ip, port)
+
+    lib_mqtt_client.loop_start()
+    
 
 def missionData():
     try:
