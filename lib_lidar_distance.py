@@ -79,7 +79,7 @@ def missionData():
 
         distance = lidar.getDistance()
         data_topic = '/MUV/data/' + lib["name"] + '/' + lib["data"][0]
-        print(distance)
+        # print(distance)
         send_data_to_msw(data_topic, distance)
     except (TypeError, ValueError):
         print("Disconnected")
