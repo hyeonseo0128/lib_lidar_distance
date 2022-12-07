@@ -90,12 +90,6 @@ def send_data_to_msw (data_topic, obj_data):
 
     lib_mqtt_client.publish(data_topic, obj_data)
 
-def on_receive_from_msw(topic, str_message):
-    print('[' + topic + '] ' + str_message)
-    cinObj = json.loads(str_message)
-    print(cinObj)
-    request_to_mission(cinObj)
-
 
 if __name__ == "__main__":
     my_lib_name = 'lib_lidar_distance'
