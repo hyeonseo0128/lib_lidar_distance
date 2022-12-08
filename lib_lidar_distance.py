@@ -21,7 +21,7 @@ class Lidar_Lite():
   def connect(self, bus):
     try:
       self.bus = smbus.SMBus(bus)
-      time.sleep(0.1)
+      time.sleep(0.5)
       return 0
     except:
       return -1
