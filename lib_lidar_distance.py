@@ -21,19 +21,19 @@ class Lidar_Lite():
   def connect(self, bus):
     try:
       self.bus = smbus.SMBus(bus)
-      time.sleep(0.001)
+      time.sleep(0.1)
       return 0
     except:
       return -1
 
   def writeAndWait(self, register, value):
     self.bus.write_byte_data(self.address, register, value);
-    time.sleep(0.002)
+    time.sleep(0.1)
 
 
   def readDistAndWait(self, register):
     res = self.bus.read_i2c_block_data(self.address, register, 2)
-    time.sleep(0.002)
+    time.sleep(0.1)
     return (res[0] << 8 | res[1])
 
   def getDistance(self):
