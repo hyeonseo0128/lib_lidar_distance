@@ -9,7 +9,6 @@ import json
 global lib
 
 
-
 class Lidar_Lite():
   def __init__(self):
     self.address = 0x62
